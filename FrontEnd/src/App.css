@@ -1,0 +1,74 @@
+* {
+  margin: 0%;
+  padding: 0%;
+  box-sizing: border-box;
+  /* background-color: rgb(23, 23, 23); */
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #191919;
+}
+
+main{
+  height: 100%;
+  width: 100%;
+  padding: 1.5rem;
+  display: flex;
+  gap: 1rem;
+}
+
+main .left, main .right {
+  height: 100%;
+  flex-basis: 50%;
+  border-radius: 0.7rem;
+}
+
+main .left {
+  background-color: black;
+  position: relative;
+}
+
+main .left .review {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  background-color: rgb(189, 210, 222);
+  color: black;
+  padding: 0.5rem 2rem;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 0.6rem;
+  user-select: none;
+}
+
+main .left .code, 
+.code pre,
+.code pre code {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  /* overflow-y: scroll; */
+  border-radius: 0.7rem;
+  background-color: rgb(40, 39, 39);
+  overflow: auto;
+}
+
+main .right {
+  background-color: #424141;
+  padding: 1rem 2rem;
+  border-radius: 0.7rem;
+  /* height: 100%; */
+  /* overflow-y: auto;
+  overflow-x: hidden; */
+  overflow: auto;
+  white-space: pre-wrap; /* keep line breaks, wrap long lines */
+  word-wrap: break-word; /* break long words */
+}
+
+
+.loading {
+  cursor:wait;
+}
