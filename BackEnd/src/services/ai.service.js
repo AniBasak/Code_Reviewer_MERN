@@ -1,4 +1,5 @@
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+const Review = require("../models/review.model");
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GEMINI_KEY);
 const model = genAI.getGenerativeModel({
@@ -84,7 +85,24 @@ const model = genAI.getGenerativeModel({
 async function generateContent(prompt) {
     const result = await model.generateContent(prompt);
     return result.response.text();
-
 }
 
-module.exports = generateContent;
+async function saveReviewToDB(code, review) {
+    try {
+         const newReview = new Review({
+            userId: "1", // placeholder until auth is added
+            code: code,
+            review: review,
+        });
+        await newReview.save();
+        return newReview;
+    } catch (error) {
+        console.error("Error saving review to DB:", error);
+        throw error;
+    }
+}
+
+module.exports = {
+    generateContent,
+    saveReviewToDB
+};
