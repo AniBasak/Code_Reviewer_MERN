@@ -7,7 +7,7 @@ module.exports.getReview = async(req, res) => {
         return res.status(400).json({error: "Code is required"});
     }
 
-    const response = await aiService(code);
+    const response = await aiService.generateContent(code);
 
     res.send(response);
 }

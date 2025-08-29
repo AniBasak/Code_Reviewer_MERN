@@ -6,12 +6,14 @@ import Markdown from 'react-markdown';
 import rehypeHighlight from 'rehype-highlight';
 import "highlight.js/styles/github-dark.css";
 import axios from 'axios';
+import toast, { Toaster } from 'react-hot-toast';
 import './App.css'
 // import { set } from '../../BackEnd/src/app';
 
 function App() {
   const [count, setCount] = useState(0)
-  const [loading, setLoading] = useState(false);
+  const [loadingR, setLoadingR] = useState(false);
+  const [loadingS, setLoadingS] = useState(false);
   const [review, setReview] = useState(``);
   const [code, setCode] = useState(`function sum(){
   return 1+1;
@@ -23,13 +25,28 @@ function App() {
 
 async function reviewCode () {
   console.log("Front End - Reviewing code: ", code);
-  setLoading(true);
+  setLoadingR(true);
 
-  const response = await axios.post('http://localhost:3000/ai/get-Review', {code})
+  const response = await axios.post('http://localhost:3000/ai/review', {code})
 
   console.log(response.data);
   setReview(response.data);
-  setLoading(false);
+  setLoadingR(false);
+}
+
+async function saveReview () {
+  console.log("Front End - Saving review: ");
+  setLoadingS(true);
+
+  try {
+    const response = await axios.post('http://localhost:3000/ai/review/save', {code, review});
+    console.log(response.data);
+    toast.success("Review saved successfully!");
+  } catch (error) {
+    console.error(error);
+    toast.error("Failed to save review");
+  }
+  setLoadingS(false);
 }
 
   return (
@@ -52,15 +69,19 @@ async function reviewCode () {
               }} 
             />
           </div>
-          {/* <div
-            onClick={reviewCode} 
-            className="review">Review</div> */}
-          {/* <button onClick={() => reviewCode()}>Review</button> */}
-          <div 
-          onClick={reviewCode}
-          className="review">
-            {loading ? "⏳ Loading review..." : "Review"}
-          </div>
+
+
+              <div 
+              onClick={reviewCode}
+              className="review">
+                {loadingR ? "⏳ Reviewing..." : "Review"}
+              </div>
+              <div 
+              onClick={saveReview}
+              className="save">
+                {loadingS ? "⏳ Saving..." : "Save"}
+              </div>
+            
         </div>
 
         <div className="right">
@@ -69,6 +90,7 @@ async function reviewCode () {
           >{review}</Markdown>
         </div>
       </main>
+      <Toaster position="top-right" reverseOrder={false} />
     </>
   )
 }

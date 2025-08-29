@@ -33,7 +33,7 @@ main .left {
 
 main .left .review {
   position: absolute;
-  bottom: 1rem;
+  bottom: 5rem;
   right: 1rem;
   background-color: rgb(189, 210, 222);
   color: black;
@@ -42,7 +42,23 @@ main .left .review {
   cursor: pointer;
   border-radius: 0.6rem;
   user-select: none;
+  margin-right: 0.8rem;
 }
+
+main .left .save {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  background-color: rgb(189, 210, 222);
+  color: black;
+  padding: 0.5rem 2.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 0.6rem;
+  user-select: none;
+  margin-right: 0.8rem;
+}
+
 
 main .left .code, 
 .code pre,
@@ -69,6 +85,10 @@ main .right {
 }
 
 
-.loading {
+.loadingR {
+  cursor:wait;
+}
+
+.loadingS {
   cursor:wait;
 }
