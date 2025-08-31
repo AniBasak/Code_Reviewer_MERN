@@ -1,7 +1,9 @@
+
 * {
   margin: 0%;
   padding: 0%;
   box-sizing: border-box;
+  /* color: aliceblue; */
   /* background-color: rgb(23, 23, 23); */
 }
 
@@ -79,6 +81,7 @@ main .right {
   /* height: 100%; */
   /* overflow-y: auto;
   overflow-x: hidden; */
+  color: aliceblue;
   overflow: auto;
   white-space: pre-wrap; /* keep line breaks, wrap long lines */
   word-wrap: break-word; /* break long words */
