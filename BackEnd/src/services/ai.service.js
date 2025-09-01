@@ -87,10 +87,10 @@ async function generateContent(prompt) {
     return result.response.text();
 }
 
-async function saveReviewToDB(code, review) {
+async function saveReviewToDB(userId, code, review) {
     try {
          const newReview = new Review({
-            userId: "1", // placeholder until auth is added
+            userId: userId, // placeholder until auth is added
             code: code,
             review: review,
         });

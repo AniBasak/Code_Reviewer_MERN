@@ -13,12 +13,12 @@ module.exports.getReview = async(req, res) => {
 }
 
 module.exports.getAndSaveReview  = async(req, res) => {
-    const {code, review} = req.body;
-    if(!code || !review) {
-        return res.status(400).json({error: "Code and Review is required"});
+    const {userId, code, review} = req.body;
+    if(!code || !review || !userId) {
+        return res.status(400).json({error: "Code, Review and User is required"});
     }
     try {
-        const savedReview = await aiService.saveReviewToDB(code, review);
+        const savedReview = await aiService.saveReviewToDB(userId, code, review);
         res.status(200).json({
             message: "Review saved successfully",
             review: savedReview
