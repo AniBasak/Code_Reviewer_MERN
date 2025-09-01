@@ -11,8 +11,10 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await doSignInWithEmailAndPassword(email, password);
-      console.log("Login successful");
+      const userCredentials = await doSignInWithEmailAndPassword(email, password);
+      const userId = userCredentials.user.uid;
+      console.log("Login successful, user ID:", userId);
+      localStorage.setItem('userId', userId); // Store user ID in localStorage
       navigate('/app'); // Redirect to App.jsx
     } catch (err) {
         setError(err.message);

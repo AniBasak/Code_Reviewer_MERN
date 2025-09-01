@@ -37,9 +37,14 @@ async function reviewCode () {
 async function saveReview () {
   console.log("Front End - Saving review: ");
   setLoadingS(true);
-
+  const userId = localStorage.getItem('userId');
+  console.log("App.jsx saveReview() User ID from localStorage:", userId);
   try {
-    const response = await axios.post('http://localhost:3000/ai/review/save', {code, review});
+    const response = await axios.post('http://localhost:3000/ai/review/save', {
+      userId, // Include userId in the request body
+      code, 
+      review
+    });
     console.log(response.data);
     toast.success("Review saved successfully!");
   } catch (error) {
