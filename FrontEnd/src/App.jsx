@@ -8,9 +8,13 @@ import "highlight.js/styles/github-dark.css";
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import './App.css'
+import { doSignOut } from './firebase/auth';
+import { useNavigate } from 'react-router-dom';
+
 // import { set } from '../../BackEnd/src/app';
 
 function App() {
+  const navigate = useNavigate();
   const [count, setCount] = useState(0)
   const [loadingR, setLoadingR] = useState(false);
   const [loadingS, setLoadingS] = useState(false);
@@ -54,6 +58,18 @@ async function saveReview () {
   setLoadingS(false);
 }
 
+async function handleSignOut() {
+  try {
+    await doSignOut();
+    localStorage.removeItem('userId');
+    toast.success('Signed out successfully!');
+    navigate('/'); // Redirect to login page
+  } catch (error) {
+    console.error('Sign out failed:', error);
+    toast.error('Failed to sign out');
+  }
+}
+
   return (
     <>
       <main>
@@ -95,6 +111,23 @@ async function saveReview () {
           >{review}</Markdown>
         </div>
       </main>
+      <div 
+        onClick={handleSignOut} 
+        className="signout"
+        style={{
+          position: 'absolute',
+          top: '10px',
+          right: '10px',
+          cursor: 'pointer',
+          padding: '10px 20px',
+          backgroundColor: '#f44336',
+          color: '#fff',
+          borderRadius: '5px',
+          fontWeight: 'bold'
+        }}
+      >
+        Sign Out
+      </div>
       <Toaster position="top-right" reverseOrder={false} />
     </>
   )
