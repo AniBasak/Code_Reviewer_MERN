@@ -30,9 +30,12 @@ function App() {
 async function reviewCode () {
   console.log("Front End - Reviewing code: ", code);
   setLoadingR(true);
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-  const response = await axios.post('http://localhost:3000/ai/review', {code})
-
+  const response = await axios.post(`${backendUrl}/ai/review`, { code });
+  
+  // const response = await axios.post('http://localhost:3000/ai/review', {code})
+  
   console.log(response.data);
   setReview(response.data);
   setLoadingR(false);
@@ -44,11 +47,16 @@ async function saveReview () {
   const userId = localStorage.getItem('userId');
   console.log("App.jsx saveReview() User ID from localStorage:", userId);
   try {
-    const response = await axios.post('http://localhost:3000/ai/review/save', {
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
+    const response = await axios.post(`${backendUrl}/ai/review/save`, { 
       userId, // Include userId in the request body
       code, 
-      review
-    });
+      review });
+    // const response = await axios.post('http://localhost:3000/ai/review/save', {
+    //   userId, // Include userId in the request body
+    //   code, 
+    //   review
+    // });
     console.log(response.data);
     toast.success("Review saved successfully!");
   } catch (error) {

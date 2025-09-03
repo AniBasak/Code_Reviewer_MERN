@@ -25,7 +25,10 @@ const Login = () => {
 const handleGoogleLogin = async () => {
     try {
         const result = await doSignInWithGoogle();
+        const userId = result.user.uid;
+        localStorage.setItem('userId', userId); // Store user ID in localStorage
         console.log("Google Login successful:", result.user);
+        console.log("User ID", userId);
         navigate('/app'); // Redirect to App.jsx
     } catch (err) {
       setError(err.message);
