@@ -42,7 +42,7 @@ const handleGoogleLogin = async () => {
         {error && <p className="error-message">{error}</p>}
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label className="label">Email ID2:</label>
+            <label className="label">Email ID3:</label>
             <input
               type="email"
               value={email}
