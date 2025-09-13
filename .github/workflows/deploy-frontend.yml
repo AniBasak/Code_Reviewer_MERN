@@ -47,3 +47,30 @@ jobs:
           aws s3 cp dist/index.html s3://${{ secrets.S3_BUCKET }}/index.html \
             --cache-control "no-cache, no-store, must-revalidate" \
             --content-type "text/html"
+
+  teardown:
+    name: Auto-empty S3 after 15 minutes
+    runs-on: ubuntu-latest
+    needs: deploy
+    if: ${{ needs.deploy.result == 'success' }}   # only run when deploy succeeded
+    timeout-minutes: 30                            # allow job up to 30 mins (safety)
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Wait 15 minutes before cleaning bucket
+        run: |
+          echo "Waiting 15 minutes before emptying bucket ${S3_BUCKET}..."
+          sleep 900   # 900s = 15 minutes
+
+      - name: Empty S3 bucket (delete all objects)
+        env:
+          S3_BUCKET: ${{ secrets.S3_BUCKET }}
+        run: |
+          echo "Deleting all objects from s3://${S3_BUCKET} ..."
+          aws s3 rm s3://${S3_BUCKET} --recursive
+          echo "Bucket emptied."
